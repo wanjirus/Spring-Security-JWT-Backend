@@ -1,25 +1,59 @@
 package com.stan.spring_security_springboot_backend.entity;
-import lombok.Data;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
-@Entity
+import lombok.Data;
+import org.hibernate.annotations.NaturalId;
 @Data
-@Table(name="users")
+@Entity
+@Table(name="users", uniqueConstraints = {@UniqueConstraint(columnNames={
+        "username"
+}),
+        @UniqueConstraint(columnNames = {"email"})})
+
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
+    @NotBlank
+    @Size(min=3, max = 50)
+    private String name;
 
-    @Column(name = "username")
+    @NotBlank
+    @Size(min=3, max = 50)
     private String username;
 
-    @Column(name = "password")
-    private String password;
-
-    @Column(name = "email")
+    @NaturalId
+    @NotBlank
+    @Size(max = 50)
+    @Email
     private String email;
 
-    @Column(name = "role")
-    private String role;
+    @NotBlank
+    @Size(min=6, max = 100)
+    private String password;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+    @JoinTable(name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name ="role_id"))
+    private  Set <Role> roles=new HashSet<>();
+    //private Set roles = new HashSet<>();
+    public User() {}
+
+    public User(String name, String username, String email, String password) {
+        this.name = name;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+    }
+
+
 }
