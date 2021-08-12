@@ -1,25 +1,26 @@
 package com.stan.spring_security_springboot_backend.controller.message.request;
+import lombok.Data;
+
 import java.util.Set;
 
 import javax.validation.constraints.*;
-
+@Data
 public class SingUpForm {
-    @NotBlank
-    @Size(min = 3, max = 50)
+
+   // @Size(min = 3, max = 50)
     private String name;
 
-    @NotBlank
+    @NotNull
     @Size(min = 3, max = 50)
     private String username;
 
-    @NotBlank
+
     @Size(max = 60)
-    @Email
     private String email;
 
     private Set role;
 
-    @NotBlank
+    @NotNull
     @Size(min = 6, max = 40)
     private String password;
 

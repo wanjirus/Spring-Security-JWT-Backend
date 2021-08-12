@@ -22,12 +22,12 @@ public class Role {
     private RoleName name;
 
 
-@ManyToMany(fetch = FetchType.LAZY, cascade = {
-        CascadeType.PERSIST,
-        CascadeType.MERGE
-},
-        mappedBy = "roles")
-private Set<User> users = new HashSet<>();
+////@ManyToMany(fetch = FetchType.LAZY, cascade = {
+////        CascadeType.PERSIST,
+////        CascadeType.MERGE
+//},
+//        mappedBy = "roles")
+//private Set<User> users = new HashSet<>();
 
 
     public Role() {}

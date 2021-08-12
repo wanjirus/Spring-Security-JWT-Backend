@@ -10,4 +10,5 @@ public class SpringSecuritySpringbootBackendApplication {
         SpringApplication.run(SpringSecuritySpringbootBackendApplication.class, args);
     }
 
+
 }
