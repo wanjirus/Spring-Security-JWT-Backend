@@ -1,9 +1,9 @@
 package com.stan.spring_security_springboot_backend.controller.message.responce;
-public class JwtResponce {
+public class JwtResponse {
     private String token;
     private String type = "Bearer";
 
-    public JwtResponce(String accessToken) {
+    public JwtResponse(String accessToken) {
         this.token = accessToken;
     }
 

@@ -8,7 +8,7 @@ import javax.validation.Valid;
 
 import com.stan.spring_security_springboot_backend.controller.message.request.LoginForm;
 import com.stan.spring_security_springboot_backend.controller.message.request.SingUpForm;
-import com.stan.spring_security_springboot_backend.controller.message.responce.JwtResponce;
+import com.stan.spring_security_springboot_backend.controller.message.responce.JwtResponse;
 import com.stan.spring_security_springboot_backend.entity.Role;
 import com.stan.spring_security_springboot_backend.entity.RoleName;
 import com.stan.spring_security_springboot_backend.entity.User;
@@ -50,8 +50,8 @@ public class AuthRestAPIs {
     @Autowired
     JwtProvider jwtProvider;
 
-    @PostMapping("/signin")
-    public ResponseEntity<JwtResponce> authenticateUser(@Valid @RequestBody LoginForm loginRequest) {
+    @PostMapping("/sign_in")
+    public ResponseEntity<JwtResponse> authenticateUser(@Valid @RequestBody LoginForm loginRequest) {
 
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -63,10 +63,10 @@ public class AuthRestAPIs {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         String jwt = jwtProvider.generateJwtToken(authentication);
-        return ResponseEntity.ok(new JwtResponce(jwt));
+        return ResponseEntity.ok(new JwtResponse(jwt));
     }
 
-    @PostMapping("/signup")
+    @PostMapping("/sign_up")
     public ResponseEntity<String> registerUser(@Valid @RequestBody SingUpForm signUpRequest) {
         if(userRepository.existsByUsername(signUpRequest.getUsername())) {
             return new ResponseEntity<>("Fail -> Username is already taken!",
